@@ -1,0 +1,67 @@
+{
+  "name": "buffer_multer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --fix --ext .ts",
+    "prettier": "prettier --check **/*.ts",
+    "prettier:fix": "prettier --write **/*.ts"
+  },
+  "keywords": [],
+  "author": "Vitor Junior <vitorjunior@poli.ufrj.br>",
+  "license": "UNLICENSED",
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint",
+      "prettier",
+      "security",
+      "import"
+    ],
+    "root": true,
+    "rules": {
+      "no-prototype-builtins": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/indent": [
+        "error",
+        4
+      ]
+    }
+  },
+  "dependencies": {
+    "ws": "^8.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.30",
+    "@types/ws": "^8.5.3",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-security": "^1.5.0",
+    "lint-staged": "^12.4.1",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.4"
+  },
+  "prettier": {
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "bracketSpacing": false,
+    "bracketSameLine": true
+  }
+}

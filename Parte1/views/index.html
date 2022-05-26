@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoC do Diego</title>
+</head>
+<body>
+    <h1>Enviando pelo Frontend e pelo Backend</h1>
+
+    <input id="file" type="file"/>
+    <button id="send">Send</button>
+    <div id="output"></div>
+</body>
+<script type='text/javascript'>
+    const ws = new WebSocket("ws://localhost:3000");
+    ws.binaryType = "arraybuffer"
+    const output = document.getElementById("output");
+    const send = document.getElementById("send");
+
+    send.addEventListener("click", () => {
+        const element = document.getElementById("file");
+        const file = element.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const rawData = e.target.result;
+            ws.send(rawData);
+            output.innerHTML += "Dados foram enviados.\n"
+        }
+        reader.readAsArrayBuffer(file);
+    });
+
+    const log = (event, file) => `<p>${event}: ${file}</p>`;
+
+    ws.onopen = function (e) {
+        output.innerHTML += "<p>O servidor está disponível!</p>";
+    }
+
+    ws.onmessage = function (e) {
+        const arrayBuffer = new Uint8Array(e.data);
+        const image = btoa(
+            arrayBuffer.reduce((acc, byte) => {
+                return acc + String.fromCharCode(byte)
+            }, '')
+        );
+        output.innerHTML += log(
+            "Recebido: ", 
+            `<img src="data:image/jpg;base64,${image}" width="200px"/>`
+        );
+    };
+
+    ws.onclose = function (e) {
+        output.innerHTML += log("Disconectado", e.code);
+    };
+
+    ws.onerror = function (e) {
+        output.innerHTML += log("Erro", e.data);
+    };
+</script>
+</html>
